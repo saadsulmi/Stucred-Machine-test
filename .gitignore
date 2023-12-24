@@ -1,4 +1,4 @@
-server/.env
+erver/.env
 server/node_modules
 frontend/.env
 frontend/node_modules

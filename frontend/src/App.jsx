@@ -8,6 +8,7 @@ import LandingPage from "./Pages/LandingPage"
 import ImageCapturePage from "./Pages/ImageCapturePage"
 import VideoCapturePage from "./Pages/VideoCapturePage"
 import SignupPage from "./Pages/SignupPage"
+import PageNotFound from "./Pages/PageNotFound"
 
 const HomePage=lazy(()=> import ('./Pages/HomePage'))
 
@@ -28,7 +29,7 @@ function App() {
             <Route path="/imagecapture" element={<ImageCapturePage/>} />
             <Route path="/videocapture" element={<VideoCapturePage/>} />
           </Route>
-          <Route path="*" element={<h1>Not found</h1>}/>
+          <Route path="*" element={<PageNotFound/>}/>
         </Routes>
       </Suspense>
   )

@@ -1,6 +1,12 @@
-const VideoPreViewer = ({recording}) => {
+const VideoPreViewer = ({recording,handleRetake}) => {
   return (
-    <video className="rounded-xl " ref={recording} autoPlay  loop />
+      <>
+      <video src={recording} controls autoPlay loop />
+      {recording&&<div>
+        <button onClick={handleRetake}>Retake</button>
+        <button>Preview</button>
+      </div>}
+      </>
   )
 }
 

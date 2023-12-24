@@ -12,6 +12,9 @@ const userModel= new mongoose.Schema({
     password:{
         type:String,
         required:true
+    },
+    images:{
+        type:[String],
     }
 },{timestamps:true})
 
