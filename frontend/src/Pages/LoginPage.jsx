@@ -4,9 +4,11 @@ import { PiEyeClosedBold } from "react-icons/pi";
 import { useDispatch } from "react-redux";
 import {  loginUser } from "../services/API";
 import { set_user } from "../features/authReducer";
+import { useNavigate } from "react-router-dom";
 
 const LoginPage = () => {
   const [passwordVisible,setpasswordVisible]=useState(false);
+  const navigate = useNavigate()
   const dispatch=useDispatch()
   const [user,setUser]=useState({email:'',password:''});
   const [error,setError]=useState({email:false,message:false});
@@ -42,6 +44,7 @@ const LoginPage = () => {
           {passwordVisible?<FaEye className="absolute cursor-pointer right-2 mr-4 text-xl" onClick={()=>setpasswordVisible(!passwordVisible)}/>
           :<PiEyeClosedBold className="absolute cursor-pointer right-2 mr-4 text-xl" onClick={()=>setpasswordVisible(!passwordVisible)} />}
         </div>
+        <h1>Create Account  <span className="underline cursor-pointer text-blue-500" onClick={()=>navigate('/signup')}>Sign up</span></h1>
          {message&&<label className={`text-red-600 mt-1 ${error.message?'visible':'hidden'}`} >{message}</label>}
         <button className='w-1/2 mt-4 rounded-md h-12 bg-blue-600 duration-200 hover:bg-blue-800 text-xl text-white' onClick={handleSubmit}>Login</button>
       </div>
