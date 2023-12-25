@@ -11,7 +11,7 @@ const Header = () => {
     const handleLogout=()=>{
       localStorage.removeItem('auth-token');
       dispatch(reset_user())
-      window.location.reload()
+      navigate('/')
     }
   return (
     <div className='w-full h-[10vh] shadow-lg flex justify-between items-center px-8 mb-10'>
