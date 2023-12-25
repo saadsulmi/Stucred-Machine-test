@@ -52,8 +52,58 @@ const getImage=async(projectId,key)=>{
         console.log(error);
     }
 }
+const uploadVideo = async (file, userId) => {
+    try {
+        const key = `${userId}/${uuidv4()}`;
+        const command = new PutObjectCommand({
+            Bucket: bucketName,
+            Key: key,
+            Body: file,  
+            ContentType: 'video/mp4',  
+        });
+
+        await s3.send(command);
+
+        const url = await getVideoUrl(userId, key);
+
+        return url;
+    } catch (error) {
+        return error;
+    }
+};
+
+const getVideoKeysByProject = async (projectId, key) => {
+    const command = new ListObjectsV2Command({
+        Bucket: bucketName,
+        Prefix: projectId, 
+    });
+
+    const { Contents } = await s3.send(command) || [];
+    return Contents.filter(video => video.Key === key);
+};
+
+const getVideoUrl = async (projectId, key) => {
+    try {
+        const videoKeys = await getVideoKeysByProject(projectId, key);
+
+        if (videoKeys.length > 0) {
+            const command = new GetObjectCommand({
+                Bucket: bucketName,
+                Key: videoKeys[0].Key,
+            });
+
+            const presignedUrl = await getSignedUrl(s3, command, { expiresIn: 400000 });
+            return presignedUrl;
+        } else {
+            throw new Error('Video not found');
+        }
+    } catch (error) {
+        console.error(error);
+        throw error;  
+    }
+};
 
 module.exports={
     uploadImage ,
-    getImage
+    uploadVideo
 }

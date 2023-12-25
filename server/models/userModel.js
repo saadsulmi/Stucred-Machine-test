@@ -15,6 +15,9 @@ const userModel= new mongoose.Schema({
     },
     images:{
         type:[String],
+    },
+    videos:{
+        type:[String],
     }
 },{timestamps:true})
 

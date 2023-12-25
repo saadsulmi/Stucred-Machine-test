@@ -2,7 +2,7 @@ const userModel=require('../models/userModel')
 const bcrypt=require('bcrypt')
 const jwt=require('jsonwebtoken')
 const { createToken, verifyToken } = require('../utils/jwt')
-const { uploadImage } = require('../utils/s3')
+const { uploadImage, uploadVideo } = require('../utils/s3')
 
 const createUser=async(req,res)=>{
     try {
@@ -67,6 +67,22 @@ const addImage=async (req,res)=>{
         res.status(400).json({message:error.message})
     }
 }
+const addVideo=async (req,res)=>{
+    try {
+        const token= req.header('auth-token')
+        const user = await verifyToken(token)
+        const data = req.files[0];
+        const url= await uploadVideo(data.buffer,user.id)
+        const userData= await userModel.findOne({_id:user.id});
+        console.log(userData,url)
+        await userData.videos.push(url)
+        await userData.save()
+        res.status(200).json({message:'video uploaded successfully'})
+    } catch (error) {
+        console.log(error);
+        res.status(400).json({message:error.message})
+    }
+}
 
 const getimages= async (req,res)=>{
     try {
@@ -77,7 +93,7 @@ const getimages= async (req,res)=>{
         const user = await verifyToken(token);
         const userData= await userModel.findOne({_id:user.id});
         if(userData){
-           return res.status(200).json({images:userData.images})
+           return res.status(200).json({images:userData.images,videos:userData.videos})
         }
         res.status(404).json({message:'user not found'})
     } catch (error) {
@@ -90,5 +106,6 @@ module.exports={
     createUser,
     loginUser,
     addImage,
+    addVideo,
     getimages
 }

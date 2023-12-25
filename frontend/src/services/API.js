@@ -14,3 +14,5 @@ export const loginUser=async(data)=> await axiosInstance.post('/login',data);
 export const insertImage=async(data)=> await axiosInstance.post('/addImage',data,formheaders)
 
 export const getUserImages=async(data)=> await axiosInstance.post('/getUserImg',data)
+
+export const uploadVideo = async(data)=> await axiosInstance.post('/uploadVideo',data,formheaders)

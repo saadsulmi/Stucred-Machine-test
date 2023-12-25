@@ -14,6 +14,8 @@ const HomePage = () => {
   useEffect(()=>{
     getUserImages().then(res=>{
       setImages(res.data.images);
+      setVideos(res.data.videos);
+
     }).catch(e=>{
       if(e.response.data.reload){
         window.location.reload();
@@ -34,7 +36,7 @@ const HomePage = () => {
               style={{ width: 400, height: 400 }}
             />
             </div>)}
-            {modal.video&&(videos.length>0?videos.map((url,idx)=><img className='w-30 mr-2 border shadow-xl mt-2 border-zinc-400 object-cover rounded-xl h-40' key={idx} src={url} alt="img" />):<div className="w-full h-full flex justify-center items-center">
+            {modal.video&&(videos.length>0?videos.map((url,idx)=><video controls className='w-30 mr-2 border shadow-xl mt-2 border-zinc-400 object-cover rounded-xl h-40' key={idx} src={url} alt="img" />):<div className="w-full h-full flex justify-center items-center">
             <Lottie
               loop
               animationData={videoLottie}
