@@ -4,9 +4,11 @@ import { PiEyeClosedBold } from "react-icons/pi";
 import { createUser } from "../services/API";
 import {useDispatch} from 'react-redux'
 import {set_user} from '../features/authReducer'
+import { useNavigate } from "react-router-dom";
 const SignupPage = () => {
-  const [user,setUser]=useState({username:'',email:'',password:''});
   const dispatch=useDispatch()
+  const navigate=useNavigate()
+  const [user,setUser]=useState({username:'',email:'',password:''});
   const [passwordVisible,setpasswordVisible]=useState(false);
   const [error,setError]=useState({email:false,message:false});
   const [message,setMessage]=useState('');
@@ -22,6 +24,7 @@ const SignupPage = () => {
       createUser(user).then(res=>{
         dispatch(set_user(res.data.token));
         localStorage.setItem('auth-token',JSON.stringify(res.data.token))
+        navigate('/home')
       }).catch(e=>{
         setError(prev=>({...prev,message:true}))
         setMessage(e.response.data.message)

@@ -7,7 +7,6 @@ const Header = () => {
     const location=useLocation();
     const dispatch=useDispatch()
     const navigate=useNavigate()
-    console.log(location.pathname);
     const menuList=['home','video capture','image capture']
     const handleLogout=()=>{
       localStorage.removeItem('auth-token');

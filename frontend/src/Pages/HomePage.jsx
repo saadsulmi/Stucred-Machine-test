@@ -17,9 +17,7 @@ const HomePage = () => {
       setVideos(res.data.videos);
 
     }).catch(e=>{
-      if(e.response.data.reload){
         window.location.reload();
-      }
     })
   },[])
   return (
